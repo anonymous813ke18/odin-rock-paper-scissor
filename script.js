@@ -9,7 +9,8 @@ while (keepGoing) {
     humanChoice = getHumanChoice();
     computerChoice = getComputerChoice();
     if (humanChoice == "quit") {
-        let winner = (humanscore == computerscore) ? "No One" : (humanscore > computerscore) ? "Player" : "Computer";
+        let winner = (humanscore == computerscore) ? "No One" : 
+                        (humanscore > computerscore) ? "Player" : "Computer";
         console.log(`Your Score: ${humanscore} \nComputer Score: ${computerscore} \n${winner} WINS!!!`);
         keepGoing = false;
     } else {
@@ -19,7 +20,9 @@ while (keepGoing) {
 
 
 function playRound(humanChoice, computerChoice) {
-    if ((humanChoice == "rock" && computerChoice == "paper") || (humanChoice == "paper" && computerChoice == "scissor") || (humanChoice == "scissor" && computerChoice == "rock")) {
+    if ((humanChoice == "rock" && computerChoice == "paper") || 
+        (humanChoice == "paper" && computerChoice == "scissor") || 
+        (humanChoice == "scissor" && computerChoice == "rock")) {
         computerscore++;
         console.log(`Your Choice: ${humanChoice} \n Computer Choice: ${computerChoice}`);
         console.log("Computer WINS!");
