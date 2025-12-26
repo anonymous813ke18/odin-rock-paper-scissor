@@ -2,41 +2,44 @@ let humanscore = 0;
 let computerscore = 0;
 let keepGoing = true;
 
-let humanChoice = "";
-let computerChoice = "";
+let buttons = document.querySelectorAll("button");
+let humanPara = document.querySelector("#humanScore");
+let compPara = document.querySelector("#computerScore");
+let result = document.querySelector("#result");
 
-while (keepGoing) {
-    humanChoice = getHumanChoice();
-    computerChoice = getComputerChoice();
-    if (humanChoice == "quit") {
-        let winner = (humanscore == computerscore) ? "No One" : 
-                        (humanscore > computerscore) ? "Player" : "Computer";
-        console.log(`Your Score: ${humanscore} \nComputer Score: ${computerscore} \n${winner} WINS!!!`);
-        keepGoing = false;
-    } else {
-        playRound(humanChoice, computerChoice);
-    }
-}
+buttons.forEach((button) => {
+    button.addEventListener("click", playRound);
+})
 
+function playRound() {
+    let humanChoice = this.id;
+    let computerChoice = getComputerChoice();
 
-function playRound(humanChoice, computerChoice) {
     if ((humanChoice == "rock" && computerChoice == "paper") || 
         (humanChoice == "paper" && computerChoice == "scissor") || 
         (humanChoice == "scissor" && computerChoice == "rock")) {
         computerscore++;
-        console.log(`Your Choice: ${humanChoice} \n Computer Choice: ${computerChoice}`);
-        console.log("Computer WINS!");
-        console.log(`Your Score: ${humanscore} \nComputer Score: ${computerscore}`)
+        humanPara.textContent = `Your Choice: ${humanChoice} Your Score: ${humanscore}`;
+        compPara.textContent = `Computer Choice: ${computerChoice} Computer Score: ${computerscore}`;
+        result.textContent = `Computer Wins This Round!!`;
     } else if (humanChoice === computerChoice) {
-        console.log(`Your Choice: ${humanChoice} \n Computer Choice: ${computerChoice}`);
-        console.log("It's a TIE!!!");
-        console.log(`Your Score: ${humanscore} \nComputer Score: ${computerscore}`)
+        humanPara.textContent = `Your Choice: ${humanChoice} Your Score: ${humanscore}`;
+        compPara.textContent = `Computer Choice: ${computerChoice} Computer Score: ${computerscore}`;
+        result.textContent = `It's a TIE!!`;
     }
     else {
         humanscore++;
-        console.log(`Your Choice: ${humanChoice} \n Computer Choice: ${computerChoice}`);
-        console.log("You WIN!");
-        console.log(`Your Score: ${humanscore} \nComputer Score: ${computerscore}`)
+        humanPara.textContent = `Your Choice: ${humanChoice} Your Score: ${humanscore}`;
+        compPara.textContent = `Computer Choice: ${computerChoice} Computer Score: ${computerscore}`;
+        result.textContent = `Player Wins This Round!!`;
+    }
+
+    if (humanscore == 5) {
+        alert("Player WINS!!");
+        buttons.forEach((button) => button.removeEventListener("click", playRound));
+    } else if (computerscore == 5) {
+        alert("Computer WINS!!");
+        buttons.forEach((button) => button.removeEventListener("click", playRound));
     }
 }
 
@@ -46,13 +49,3 @@ function getComputerChoice() {
     return choice;
 }
 
-function getHumanChoice() {
-    let choice = prompt("Enter your choice (rock, paper, scissor, or quit):");
-    choice = choice.toLowerCase();
-    if (choice == "rock" || choice == "paper" || choice == "scissor" || choice == "quit") {
-        return choice;
-    } else {
-        alert("Please enter a valid choice!");
-        getHumanChoice();
-    }
-}
